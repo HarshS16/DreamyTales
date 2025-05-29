@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
-import { Moon, Star, BookOpen, Play, Pause, Download, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Play, Download, Sparkles, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,6 +8,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import Header from '@/components/Header';
+import HeroSection from '@/components/HeroSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   const [childName, setChildName] = useState('');
@@ -121,198 +124,235 @@ The end. Sweet dreams, ${childName}. 🌙✨`;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-pink-800 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 text-yellow-200 animate-pulse">
-          <Star size={24} />
-        </div>
-        <div className="absolute top-20 right-20 text-yellow-300 animate-pulse delay-1000">
-          <Star size={16} />
-        </div>
-        <div className="absolute top-40 left-1/4 text-yellow-200 animate-pulse delay-2000">
-          <Star size={20} />
-        </div>
-        <div className="absolute bottom-40 right-1/3 text-yellow-300 animate-pulse delay-500">
-          <Star size={18} />
-        </div>
-        <div className="absolute top-60 right-10 text-yellow-200 animate-pulse delay-1500">
-          <Star size={14} />
-        </div>
-        <div className="absolute bottom-60 left-20 text-yellow-300 animate-pulse delay-3000">
-          <Star size={22} />
-        </div>
-      </div>
+      <Header />
+      <HeroSection />
 
-      <div className="relative z-10 container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <Moon className="text-yellow-300" size={48} />
-            <h1 className="text-5xl font-bold text-white bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
-              Dreamy Tales
-            </h1>
-            <BookOpen className="text-yellow-300" size={48} />
-          </div>
-          <p className="text-xl text-purple-200 max-w-2xl mx-auto">
-            Create magical bedtime stories just for you! Let AI weave enchanting tales that will carry you to dreamland.
-          </p>
-        </div>
-
-        <div className="max-w-4xl mx-auto grid gap-8 lg:grid-cols-2">
+      <div className="relative z-10 container mx-auto px-4 py-16">
+        <motion.div 
+          className="max-w-4xl mx-auto grid gap-8 lg:grid-cols-2"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
           {/* Story Generator Form */}
-          <Card className="p-6 bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
-            <div className="space-y-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="text-yellow-300" size={24} />
-                <h2 className="text-2xl font-bold text-white">Create Your Story</h2>
-              </div>
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <Card className="p-6 bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
+              <div className="space-y-6">
+                <motion.div 
+                  className="flex items-center gap-2 mb-4"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <Sparkles className="text-yellow-300" size={24} />
+                  <h2 className="text-2xl font-bold text-white">Create Your Story</h2>
+                </motion.div>
 
-              <div>
-                <label className="block text-purple-200 mb-2 font-medium">What's your name?</label>
-                <Input
-                  placeholder="Enter your name..."
-                  value={childName}
-                  onChange={(e) => setChildName(e.target.value)}
-                  className="bg-white/20 border-white/30 text-white placeholder-purple-300"
-                />
-              </div>
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  <label className="block text-purple-200 mb-2 font-medium">What's your name?</label>
+                  <Input
+                    placeholder="Enter your name..."
+                    value={childName}
+                    onChange={(e) => setChildName(e.target.value)}
+                    className="bg-white/20 border-white/30 text-white placeholder-purple-300"
+                  />
+                </motion.div>
 
-              <div>
-                <label className="block text-purple-200 mb-2 font-medium">Choose your adventure theme</label>
-                <Select value={theme} onValueChange={setTheme}>
-                  <SelectTrigger className="bg-white/20 border-white/30 text-white">
-                    <SelectValue placeholder="Pick a magical theme..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {themes.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <label className="block text-purple-200 mb-2 font-medium">Choose your adventure theme</label>
+                  <Select value={theme} onValueChange={setTheme}>
+                    <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                      <SelectValue placeholder="Pick a magical theme..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {themes.map((t) => (
+                        <SelectItem key={t} value={t}>
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </motion.div>
 
-              <div>
-                <label className="block text-purple-200 mb-2 font-medium">Who will be your story friend?</label>
-                <Select value={character} onValueChange={setCharacter}>
-                  <SelectTrigger className="bg-white/20 border-white/30 text-white">
-                    <SelectValue placeholder="Choose your character..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {characters.map((c) => (
-                      <SelectItem key={c} value={c}>
-                        {c}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.9 }}
+                >
+                  <label className="block text-purple-200 mb-2 font-medium">Who will be your story friend?</label>
+                  <Select value={character} onValueChange={setCharacter}>
+                    <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                      <SelectValue placeholder="Choose your character..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {characters.map((c) => (
+                        <SelectItem key={c} value={c}>
+                          {c}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </motion.div>
 
-              <Button
-                onClick={generateStory}
-                disabled={isGenerating}
-                className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-3 text-lg transition-all duration-300 transform hover:scale-105"
-              >
-                {isGenerating ? (
-                  <div className="flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    Creating your story...
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <Sparkles size={20} />
-                    Generate Magical Story
-                  </div>
-                )}
-              </Button>
-            </div>
-          </Card>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 1 }}
+                >
+                  <Button
+                    onClick={generateStory}
+                    disabled={isGenerating}
+                    className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-3 text-lg transition-all duration-300"
+                  >
+                    {isGenerating ? (
+                      <div className="flex items-center gap-2">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Creating your story...
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <Sparkles size={20} />
+                        Generate Magical Story
+                      </div>
+                    )}
+                  </Button>
+                </motion.div>
+              </div>
+            </Card>
+          </motion.div>
 
           {/* Story Display */}
-          <Card className="p-6 bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-bold text-white">Your Bedtime Story</h3>
-                {generatedStory && (
-                  <div className="flex gap-2">
-                    <Badge variant="secondary" className="bg-yellow-300/20 text-yellow-300">
-                      Ready to read!
-                    </Badge>
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            <Card className="p-6 bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-2xl font-bold text-white">Your Bedtime Story</h3>
+                  {generatedStory && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 500 }}
+                    >
+                      <Badge variant="secondary" className="bg-yellow-300/20 text-yellow-300">
+                        Ready to read!
+                      </Badge>
+                    </motion.div>
+                  )}
+                </div>
+
+                {generatedStory ? (
+                  <motion.div 
+                    className="space-y-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Textarea
+                      value={generatedStory}
+                      readOnly
+                      className="min-h-[300px] bg-white/20 border-white/30 text-white resize-none text-lg leading-relaxed"
+                    />
+                    
+                    <motion.div 
+                      className="flex gap-3 flex-wrap"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button
+                          onClick={generateAudio}
+                          className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                        >
+                          <Play size={16} />
+                          Generate Audio
+                        </Button>
+                      </motion.div>
+                      
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button
+                          onClick={downloadStory}
+                          variant="outline"
+                          className="flex items-center gap-2 border-white/30 text-white hover:bg-white/10"
+                        >
+                          <Download size={16} />
+                          Download Story
+                        </Button>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+                ) : (
+                  <div className="min-h-[300px] flex items-center justify-center text-purple-300 text-center">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <BookOpen size={64} className="mx-auto mb-4 opacity-50" />
+                      <p className="text-lg">Your magical story will appear here...</p>
+                      <p className="text-sm mt-2">Fill in the details and click "Generate Magical Story" to begin!</p>
+                    </motion.div>
                   </div>
                 )}
               </div>
-
-              {generatedStory ? (
-                <div className="space-y-4">
-                  <Textarea
-                    value={generatedStory}
-                    readOnly
-                    className="min-h-[300px] bg-white/20 border-white/30 text-white resize-none text-lg leading-relaxed"
-                  />
-                  
-                  <div className="flex gap-3 flex-wrap">
-                    <Button
-                      onClick={generateAudio}
-                      className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
-                    >
-                      <Play size={16} />
-                      Generate Audio
-                    </Button>
-                    
-                    <Button
-                      onClick={downloadStory}
-                      variant="outline"
-                      className="flex items-center gap-2 border-white/30 text-white hover:bg-white/10"
-                    >
-                      <Download size={16} />
-                      Download Story
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="min-h-[300px] flex items-center justify-center text-purple-300 text-center">
-                  <div>
-                    <BookOpen size={64} className="mx-auto mb-4 opacity-50" />
-                    <p className="text-lg">Your magical story will appear here...</p>
-                    <p className="text-sm mt-2">Fill in the details and click "Generate Magical Story" to begin!</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </Card>
-        </div>
+            </Card>
+          </motion.div>
+        </motion.div>
 
         {/* Features Section */}
-        <div className="mt-16 text-center">
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
           <h3 className="text-3xl font-bold text-white mb-8">✨ Magical Features ✨</h3>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="text-white" size={32} />
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2">AI-Generated Stories</h4>
-              <p className="text-purple-200">Unique tales created just for you every time</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Play className="text-white" size={32} />
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2">Soothing Audio</h4>
-              <p className="text-purple-200">Stories read aloud like grandma's voice</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Download className="text-white" size={32} />
-              </div>
-              <h4 className="text-xl font-bold text-white mb-2">Save & Share</h4>
-              <p className="text-purple-200">Keep your favorite stories forever</p>
-            </div>
+            {[
+              { icon: Sparkles, title: "AI-Generated Stories", desc: "Unique tales created just for you every time", color: "from-pink-500 to-purple-600" },
+              { icon: Play, title: "Soothing Audio", desc: "Stories read aloud like grandma's voice", color: "from-blue-500 to-green-600" },
+              { icon: Download, title: "Save & Share", desc: "Keep your favorite stories forever", color: "from-yellow-500 to-orange-600" }
+            ].map((feature, index) => (
+              <motion.div 
+                key={feature.title}
+                className="text-center"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1 + index * 0.2 }}
+                whileHover={{ y: -10 }}
+              >
+                <motion.div 
+                  className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-full flex items-center justify-center mx-auto mb-4`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <feature.icon className="text-white" size={32} />
+                </motion.div>
+                <h4 className="text-xl font-bold text-white mb-2">{feature.title}</h4>
+                <p className="text-purple-200">{feature.desc}</p>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
+
+      <Footer />
     </div>
   );
 };
