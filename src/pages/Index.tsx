@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Download, Sparkles, BookOpen } from 'lucide-react';
+import { Play, Stop, Download, Sparkles, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,9 +8,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import { useTTS } from '@/hooks/useTTS';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import Footer from '@/components/Footer';
+import ApiKeyInput from '@/components/ApiKeyInput';
 
 const Index = () => {
   const [childName, setChildName] = useState('');
@@ -18,8 +20,16 @@ const Index = () => {
   const [character, setCharacter] = useState('');
   const [generatedStory, setGeneratedStory] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioUrl, setAudioUrl] = useState('');
+
+  const { 
+    generateAudio, 
+    playAudio, 
+    stopAudio, 
+    saveApiKey,
+    isGenerating: isGeneratingAudio, 
+    isPlaying, 
+    audioUrl: hasAudioUrl 
+  } = useTTS();
 
   const themes = [
     'Magical Forest Adventure',
@@ -81,21 +91,8 @@ The end. Sweet dreams, ${childName}. 🌙✨`;
     }, 3000);
   };
 
-  const generateAudio = async () => {
-    if (!generatedStory) {
-      toast({
-        title: "No Story Yet",
-        description: "Please generate a story first!",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // This would integrate with a text-to-speech API like ElevenLabs
-    toast({
-      title: "Audio Feature",
-      description: "Audio generation would integrate with a TTS service like ElevenLabs. Please add your API key to enable this feature.",
-    });
+  const handleGenerateAudio = async () => {
+    await generateAudio(generatedStory);
   };
 
   const downloadStory = () => {
@@ -139,6 +136,7 @@ The end. Sweet dreams, ${childName}. 🌙✨`;
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
+            className="space-y-6"
           >
             <Card className="p-6 bg-white/10 backdrop-blur-md border-white/20 shadow-xl">
               <div className="space-y-6">
@@ -231,6 +229,9 @@ The end. Sweet dreams, ${childName}. 🌙✨`;
                 </motion.div>
               </div>
             </Card>
+
+            {/* API Key Input */}
+            <ApiKeyInput onSave={saveApiKey} />
           </motion.div>
 
           {/* Story Display */}
@@ -276,13 +277,24 @@ The end. Sweet dreams, ${childName}. 🌙✨`;
                       transition={{ delay: 0.3 }}
                     >
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button
-                          onClick={generateAudio}
-                          className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
-                        >
-                          <Play size={16} />
-                          Generate Audio
-                        </Button>
+                        {!isPlaying ? (
+                          <Button
+                            onClick={hasAudioUrl ? playAudio : handleGenerateAudio}
+                            disabled={isGeneratingAudio}
+                            className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                          >
+                            <Play size={16} />
+                            {isGeneratingAudio ? 'Generating...' : hasAudioUrl ? 'Play Audio' : 'Generate Audio'}
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={stopAudio}
+                            className="flex items-center gap-2 bg-red-600 hover:bg-red-700"
+                          >
+                            <Stop size={16} />
+                            Stop Audio
+                          </Button>
+                        )}
                       </motion.div>
                       
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
