@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from '@/hooks/use-toast';
 import { useTTS } from '@/hooks/useTTS';
@@ -28,6 +28,20 @@ const Index = () => {
     audioUrl: hasAudioUrl 
   } = useTTS();
 
+  useEffect(() => {
+    try {
+      const service = new GeminiService();
+      setGeminiService(service);
+    } catch (error) {
+      console.error('Failed to initialize Gemini service:', error);
+      toast({
+        title: "Error",
+        description: "Failed to initialize story generation service. Please check your environment configuration.",
+        variant: "destructive"
+      });
+    }
+  }, []);
+
   const generateStory = async () => {
     if (!childName || !theme || !character) {
       toast({
@@ -40,8 +54,8 @@ const Index = () => {
 
     if (!geminiService) {
       toast({
-        title: "API Key Required",
-        description: "Please set your Gemini API key first!",
+        title: "Service Unavailable",
+        description: "Story generation service is not available. Please try again later.",
         variant: "destructive"
       });
       return;
@@ -67,23 +81,6 @@ const Index = () => {
       });
     } finally {
       setIsGenerating(false);
-    }
-  };
-
-  const handleSaveApiKey = (apiKey: string) => {
-    try {
-      const service = new GeminiService({ apiKey });
-      setGeminiService(service);
-      toast({
-        title: "Success",
-        description: "Gemini API key saved successfully!",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to save API key. Please try again.",
-        variant: "destructive"
-      });
     }
   };
 
@@ -136,7 +133,7 @@ const Index = () => {
             setCharacter={setCharacter}
             isGenerating={isGenerating}
             onGenerateStory={generateStory}
-            onSaveApiKey={handleSaveApiKey}
+            onSaveApiKey={saveApiKey}
           />
 
           <StoryDisplay

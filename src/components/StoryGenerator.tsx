@@ -119,38 +119,11 @@ const StoryGenerator: React.FC<StoryGeneratorProps> = ({
           </motion.div>
 
           <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1.2 }}
-          >
-            <label className="block text-purple-200 mb-2 font-medium">Gemini API Key</label>
-            <div className="flex gap-2">
-              <Input
-                type="password"
-                placeholder="Enter your Gemini API key..."
-                onChange={(e) => onSaveApiKey(e.target.value)}
-                className="bg-white/20 border-white/30 text-white placeholder-purple-300"
-              />
-            </div>
-            <p className="text-purple-200 text-xs mt-2">
-              Get your API key from{' '}
-              <a 
-                href="https://makersuite.google.com/app/apikey" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-yellow-300 hover:underline"
-              >
-                Google AI Studio
-              </a>
-            </p>
-          </motion.div>
-
-          <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.5 }}
+            transition={{ delay: 1.2 }}
           >
             <Button
               onClick={onGenerateStory}
