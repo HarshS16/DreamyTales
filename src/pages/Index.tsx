@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from '@/hooks/use-toast';
@@ -9,6 +8,7 @@ import Footer from '@/components/Footer';
 import StoryGenerator from '@/components/StoryGenerator';
 import StoryDisplay from '@/components/StoryDisplay';
 import FeaturesSection from '@/components/FeaturesSection';
+import { GeminiService } from '@/services/geminiService';
 
 const Index = () => {
   const [childName, setChildName] = useState('');
@@ -16,6 +16,7 @@ const Index = () => {
   const [character, setCharacter] = useState('');
   const [generatedStory, setGeneratedStory] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [geminiService, setGeminiService] = useState<GeminiService | null>(null);
 
   const { 
     generateAudio, 
@@ -37,32 +38,53 @@ const Index = () => {
       return;
     }
 
+    if (!geminiService) {
+      toast({
+        title: "API Key Required",
+        description: "Please set your Gemini API key first!",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsGenerating(true);
     
-    // Simulate AI story generation (you'll need to integrate with your preferred LLM API)
-    const storyPrompt = `Create a gentle, soothing bedtime story for a child named ${childName}. The story should feature ${character} in ${theme}. Make it calming, positive, and about 200-300 words long. End with a peaceful, sleepy conclusion.`;
-    
-    // Mock story generation - replace with actual AI API call
-    setTimeout(() => {
-      const mockStory = `Once upon a time, in a ${theme.toLowerCase()}, there lived ${character.toLowerCase()} named Whiskers. ${childName}, this magical friend was about to embark on the most wonderful adventure.
-
-Whiskers discovered a path lined with glowing flowers that seemed to dance in the gentle evening breeze. As our friend walked along this enchanted trail, tiny fireflies began to join the journey, creating a soft, golden light that made everything feel safe and warm.
-
-Soon, Whiskers came across a beautiful clearing where all the forest animals had gathered for their nightly song. The rabbits hummed gentle melodies, the owls added soft hoots, and the crickets provided a peaceful rhythm. ${childName}, it was the most beautiful lullaby anyone had ever heard.
-
-As the moon rose high in the star-filled sky, Whiskers found the perfect spot under a large, friendly tree. The tree's branches seemed to reach down like gentle arms, creating a cozy shelter. All the animal friends gathered around, and together they watched the stars twinkle like diamonds against the deep blue night.
-
-${childName}, as Whiskers closed their eyes and listened to the gentle sounds of the night, a feeling of peace and happiness filled their heart. And soon, with the moon watching over and the stars standing guard, everyone in the magical land drifted off to the sweetest dreams.
-
-The end. Sweet dreams, ${childName}. 🌙✨`;
-
-      setGeneratedStory(mockStory);
-      setIsGenerating(false);
+    try {
+      const storyPrompt = `Create a gentle, soothing bedtime story for a child named ${childName}. The story should feature ${character} in ${theme}. Make it calming, positive, and about 200-300 words long. End with a peaceful, sleepy conclusion.`;
+      
+      const story = await geminiService.generateStory(storyPrompt);
+      setGeneratedStory(story);
+      
       toast({
         title: "Story Generated!",
         description: "Your magical bedtime story is ready!",
       });
-    }, 3000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to generate story. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleSaveApiKey = (apiKey: string) => {
+    try {
+      const service = new GeminiService({ apiKey });
+      setGeminiService(service);
+      toast({
+        title: "Success",
+        description: "Gemini API key saved successfully!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save API key. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleGenerateAudio = async () => {
@@ -114,7 +136,7 @@ The end. Sweet dreams, ${childName}. 🌙✨`;
             setCharacter={setCharacter}
             isGenerating={isGenerating}
             onGenerateStory={generateStory}
-            onSaveApiKey={saveApiKey}
+            onSaveApiKey={handleSaveApiKey}
           />
 
           <StoryDisplay
