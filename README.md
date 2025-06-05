@@ -47,38 +47,6 @@ A magical web application that creates personalized bedtime stories for children
 4. **Open your browser**
    Navigate to `http://localhost:8080` to see the application.
 
-## 🔧 Configuration
-
-### AI Story Generation
-
-To enable AI story generation, you'll need to integrate with an LLM provider:
-
-1. **OpenAI Integration** (Recommended)
-   - Get an API key from [OpenAI](https://platform.openai.com/)
-   - Add your API key to environment variables or integrate with Supabase Edge Functions
-
-2. **Alternative LLM Providers**
-   - Anthropic Claude
-   - Google Gemini
-   - Cohere
-
-### Audio Generation
-
-For text-to-speech functionality, we recommend using ElevenLabs:
-
-1. **ElevenLabs Setup**
-   - Sign up at [ElevenLabs](https://elevenlabs.io/)
-   - Get your API key
-   - Install the ElevenLabs React package:
-   ```bash
-   npm install @11labs/react
-   ```
-
-2. **Alternative TTS Providers**
-   - Google Cloud Text-to-Speech
-   - Amazon Polly
-   - Azure Cognitive Services
-
 ## 🏗️ Tech Stack
 
 - **Frontend Framework**: React 18 with TypeScript
@@ -109,42 +77,9 @@ src/
 └── App.tsx              # Main app component
 ```
 
-## 🎯 Usage
-
-1. **Enter Child's Name**: Input the child's name for personalization
-2. **Choose Theme**: Select from 8 magical themes like "Magical Forest Adventure" or "Underwater Kingdom"
-3. **Pick Character**: Choose a friendly character to be the story's protagonist
-4. **Generate Story**: Click "Generate Magical Story" to create a unique bedtime story
-5. **Listen or Download**: Generate audio narration or download the story as a text file
-
-## 🚀 Deployment
-
-### Deploy with Lovable
-
-1. Click the "Publish" button in the Lovable editor
-2. Your app will be deployed to a Lovable subdomain
-3. Optionally connect a custom domain in Project Settings
-
-### Deploy to Other Platforms
-
-The app can be deployed to any static hosting service:
-
-- **Vercel**: Connect your GitHub repo for automatic deployments
-- **Netlify**: Drag and drop the build folder or connect via Git
-- **GitHub Pages**: Use the built-in Actions workflow
-
 Build command:
 ```bash
 npm run build
-```
-
-## 🔒 Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-VITE_OPENAI_API_KEY=your_openai_api_key_here
-VITE_ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 ```
 
 ## 🤝 Contributing
@@ -158,14 +93,6 @@ VITE_ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built with [Lovable](https://lovable.dev) - AI-powered web development platform
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
-- Icons from [Lucide](https://lucide.dev/)
-- Animations powered by [Framer Motion](https://www.framer.com/motion/)
-
 ## 📞 Support
 
 If you have any questions or need help:
