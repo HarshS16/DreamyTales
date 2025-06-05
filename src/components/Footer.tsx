@@ -102,7 +102,7 @@ const Footer = () => {
             >
               <Heart size={16} className="text-red-400" />
             </motion.div>
-            for sweet dreams © 2024 Dreamy Tales
+            by Harsh Srivastava 
           </p>
         </motion.div>
       </div>
